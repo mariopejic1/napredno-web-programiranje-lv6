@@ -1,6 +1,7 @@
 <h1><%= project.naziv %></h1>
-<p><%= project.opis %></p>
+<p>Opis:<%= project.opis %></p>
 <p>Cijena: <%= project.cijena %></p>
+<p>Poslovi: <%= project.poslovi %></p>
 
 <h3>Članovi</h3>
 <ul>
@@ -17,5 +18,7 @@
 <form method="POST" action="/projects/<%= project._id %>/delete">
 <button>Obriši</button>
 </form>
+
+<p><a href="/projects/<%= project._id %>/edit">Uredi projekt</a></p>
 
 <a href="/projects">Nazad</a>

@@ -33,4 +33,23 @@ router.post("/:id/add-member", async (req, res) => {
     res.redirect("/projects/" + req.params.id);
 });
 
+router.get("/:id/edit", async (req, res) => {
+    const project = await Project.findById(req.params.id);
+    if (!project) return res.redirect("/projects");
+    res.render("projects/edit", { project });
+});
+
+router.post("/:id/edit", async (req, res) => {
+    const { naziv, opis, cijena, poslovi, datumPocetka, datumZavrsetka } = req.body;
+    await Project.findByIdAndUpdate(req.params.id, {
+        naziv,
+        opis,
+        cijena,
+        poslovi,
+        datumPocetka,
+        datumZavrsetka
+    });
+    res.redirect("/projects/" + req.params.id);
+});
+
 module.exports = router;
