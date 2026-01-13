@@ -1,0 +1,21 @@
+<h1><%= project.naziv %></h1>
+<p><%= project.opis %></p>
+<p>Cijena: <%= project.cijena %></p>
+
+<h3>Članovi</h3>
+<ul>
+<% project.clanovi.forEach(c => { %>
+<li><%= c %></li>
+<% }) %>
+</ul>
+
+<form method="POST" action="/projects/<%= project._id %>/add-member">
+<input name="clan">
+<button>Dodaj člana</button>
+</form>
+
+<form method="POST" action="/projects/<%= project._id %>/delete">
+<button>Obriši</button>
+</form>
+
+<a href="/projects">Nazad</a>
