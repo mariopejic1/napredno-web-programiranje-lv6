@@ -1,11 +1,15 @@
-<h1>Uredi projekt</h1>
-<form method="POST" action="/projects/<%= project._id %>/edit">
-Naziv: <input name="naziv" value="<%= project.naziv %>"><br>
-Opis: <input name="opis" value="<%= project.opis %>"><br>
-Cijena: <input name="cijena" value="<%= project.cijena %>"><br>
-Poslovi: <input name="poslovi" value="<%= project.poslovi %>"><br>
-Datum početka: <input type="date" name="datumPocetka" value="<%= project.datumPocetka ? project.datumPocetka.toISOString().split('T')[0] : '' %>"><br>
-Datum završetka: <input type="date" name="datumZavrsetka" value="<%= project.datumZavrsetka ? project.datumZavrsetka.toISOString().split('T')[0] : '' %>"><br>
+<h2>Edit</h2>
+
+<form method="POST">
+<input name="naziv" value="<%= project.naziv %>">
+<input name="opis" value="<%= project.opis %>">
+<input name="cijena" value="<%= project.cijena %>">
+<h3>Dodaj posao</h3>
+
+<form action="/projects/<%= project._id %>/tasks" method="POST">
+    <input type="text" name="posao" placeholder="Npr. Dizajn baze" required>
+    <button type="submit">Dodaj</button>
+</form>
+
 <button>Spremi</button>
 </form>
-<a href="/projects/<%= project._id %>">Nazad</a>

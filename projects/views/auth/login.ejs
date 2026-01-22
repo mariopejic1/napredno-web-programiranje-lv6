@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+    <h1>Login</h1>
+
+    <form method="POST" action="/auth/login">
+        <input type="text" name="username" placeholder="Korisničko ime" required>
+        <input type="password" name="password" placeholder="Lozinka" required>
+        <button type="submit">Login</button>
+    </form>
+
+    <p>Nemate račun? <a href="/auth/register">Registrirajte se</a></p>
+</body>
+</html>

@@ -1,9 +1,41 @@
-<h1>Projekti</h1>
-<a href="/projects/new">Novi projekt</a>
-<ul>
-<% projects.forEach(p => { %>
-<li>
-<a href="/projects/<%= p._id %>"><%= p.naziv %></a>
-</li>
-<% }) %>
-</ul>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Projekti</title>
+</head>
+<body>
+    <h1>Dobrodošli u projekte</h1>
+
+    <nav style="margin-bottom:20px;">
+        <a href="/projects/new">Novi projekt</a> |
+        <a href="/projects/my">Moji projekti (lider)</a> |
+        <a href="/projects/member">Projekti gdje sam član</a> |
+        <a href="/projects/archive">Arhivirani projekti</a> |
+        <a href="/auth/logout">Logout</a>
+    </nav>
+
+    <% if(viewType === 'my'){ %>
+        <h2>Moji projekti (lider)</h2>
+    <% } else if(viewType === 'member'){ %>
+        <h2>Projekti gdje sam član</h2>
+    <% } else if(viewType === 'archive'){ %>
+        <h2>Arhivirani projekti</h2>
+    <% } %>
+
+    <% if(projects.length === 0){ %>
+        <p>Nema projekata za prikaz.</p>
+    <% } else { %>
+        <ul>
+        <% projects.forEach(p => { %>
+            <li>
+                <a href="/projects/<%= p._id %>"><%= p.naziv %></a>
+                <% if(p.arhiviran){ %>
+                    <span style="color:gray;">[arhiviran]</span>
+                <% } %>
+            </li>
+        <% }) %>
+        </ul>
+    <% } %>
+</body>
+</html>

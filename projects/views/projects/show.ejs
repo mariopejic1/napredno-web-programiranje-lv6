@@ -1,24 +1,57 @@
 <h1><%= project.naziv %></h1>
-<p>Opis:<%= project.opis %></p>
-<p>Cijena: <%= project.cijena %></p>
-<p>Poslovi: <%= project.poslovi %></p>
 
-<h3>Članovi</h3>
+<p>Opis: <%= project.opis %></p>
+<p>Cijena: <%= project.cijena %></p>
+<p>Lider: <%= project.voditelj.username %></p>
+<p>Status: <%= project.arhiviran ? 'Arhiviran' : 'Aktivan' %></p>
+
+<h3>Obavljeni poslovi</h3>
 <ul>
-<% project.clanovi.forEach(c => { %>
-<li><%= c %></li>
-<% }) %>
+    <% project.obavljeni_poslovi.forEach(posao => { %>
+        <li><%= posao %></li>
+    <% }) %>
 </ul>
 
-<form method="POST" action="/projects/<%= project._id %>/add-member">
-<input name="clan">
-<button>Dodaj člana</button>
-</form>
+<% if(!project.arhiviran){ %>
 
-<form method="POST" action="/projects/<%= project._id %>/delete">
-<button>Obriši</button>
-</form>
+    <% if(isLeader || isMember){ %>
+        <form method="POST" action="/projects/<%= project._id %>/tasks">
+            <input type="text" name="posao" placeholder="Novi posao" required>
+            <button type="submit">Dodaj posao</button>
+        </form>
+    <% } %>
 
-<p><a href="/projects/<%= project._id %>/edit">Uredi projekt</a></p>
+    <% if(isLeader){ %>
+        <h3>Članovi tima</h3>
+        <ul>
+            <% project.clanovi.forEach(c => { %>
+                <li><%= c.username %></li>
+            <% }) %>
+        </ul>
 
-<a href="/projects">Nazad</a>
+        <form method="POST" action="/projects/<%= project._id %>/add-member">
+            <select name="clan" required>
+                <% users.forEach(u => { %>
+                    <% if (!project.clanovi.some(c => c._id.equals(u._id)) && !project.voditelj._id.equals(u._id)) { %>
+                        <option value="<%= u._id %>"><%= u.username %></option>
+                    <% } %>
+                <% }) %>
+            </select>
+            <button type="submit">Dodaj člana</button>
+        </form>
+
+        <form method="POST" action="/projects/<%= project._id %>/delete" style="margin-top:10px;">
+            <button>Obriši projekt</button>
+        </form>
+
+        <form method="POST" action="/projects/<%= project._id %>/archive" style="margin-top:10px;">
+            <button>Arhiviraj projekt</button>
+        </form>
+
+        <a href="/projects/<%= project._id %>/edit">Uredi projekt</a>
+    <% } %>
+
+<% } %>
+
+<br>
+<a href="/projects/my">Nazad</a>

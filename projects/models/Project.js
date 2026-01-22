@@ -1,13 +1,31 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const projectSchema = new mongoose.Schema({
+module.exports = mongoose.model('Project', new mongoose.Schema({
+
     naziv: String,
     opis: String,
     cijena: Number,
-    poslovi: String,
+    obavljeni_poslovi: {
+        type: [String],
+        default: []
+    },
+
     datumPocetka: Date,
     datumZavrsetka: Date,
-    clanovi: [String]
-});
 
-module.exports = mongoose.model("Project", projectSchema);
+    voditelj: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+
+    clanovi: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+
+    arhiviran: {
+        type: Boolean,
+        default: false
+    }
+
+}));
